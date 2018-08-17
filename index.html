@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+  <link rel="stylesheet" href="styles/styles.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
+
+  <title>Type Type Revolution</title>
+</head>
+
+<body>
+
+  <main class="game-section">
+    <header class="intro">
+      <div class="intro-title">
+        <p></p>
+        <h1>> <span class="welcome blink-cursor">Welcome to <span>TYPE TYPE REVOLUTION</span></h1>
+        <h4 class="author ">By: Khoi Pham</h4>
+        <button class="read-rules typewriter-3 ">PRESS <span>ENTER</span> TO CONTINUE</button>
+      </div>
+      <div class="intro-rules ">
+        <h3>Rules</h3>
+        <ol>
+          <li>Type the words you see on screen.</li>
+          <li>Longer words give more points.</li>
+          <li>It's GAME OVER when you have more than 10 words unanswered on the screen OR the timer is at zero.</li>
+        </ol>
+        <button class="game-start ">PRESS <span>ENTER</span> TO START</button>
+      </div>
+    </header>
+
+
+    <div class="wrapper ">
+      <div class="stats ">
+        <h2 class="score ">Score:
+          <span></span>
+        </h2>
+        <h2 class="timer ">Timer:
+          <span></span>
+        </h2>
+      </div>
+      <form class="user-form " action=" ">
+        <label for="user-input " class="visuallyhidden ">User Input</label>
+        <input type="text " name="user-input " id="user-input " class="user-input" autocomplete="off ">
+      </form>
+      <div class="words ">
+      </div>
+    </div>
+
+    <section class="ending ">
+      <div class="ending-win ">
+        <h2>Congratulations!</h2>
+        <div class="ending-stats ">
+          <p class="ending-number-of-words ">You typed: <span class="ending-stat ">0</span> words</p>
+          <p class="ending-average-typing-second ">Average rate (per second): <span>0</span> words/second</p>
+          <p class="ending-average-typing-minute ">Average rate (per minute): <span>0</span> words/minute</p>
+        </div>
+        <button class="reset ">PRESS <span>ENTER</span> TO PLAY AGAIN</button>
+      </div>
+      <div class="ending-lose ">
+        <h2>GAME OVER</h2>
+        <p> Keep practicing and try again!</p>
+        <button class="reset ">PRESS <span>ENTER</span> TO PLAY AGAIN</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOR REGULAR JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js "></script>
+  <!-- FOR JQUERY UI -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js "></script>
+  <!-- FOR JS SCRIPT -->
+  <script src="script.js "></script>
+
+
+</body>
+
+</html>
