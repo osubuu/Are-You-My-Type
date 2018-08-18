@@ -355,6 +355,11 @@ li {
   color: #42f448;
   border: none;
   font-weight: 400;
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
 }
 
 .words {
@@ -560,10 +565,6 @@ button {
   outline: 0;
   font-size: 2.4rem;
   margin-top: 1%;
-
-  &:focus {
-    outline: 0;
-  }
 }
 
 .credits {
