@@ -415,12 +415,16 @@ gameApp.generateWords = () => {
       $(".ending-average-typing-second").text(averageTypingSecond);
       $(".ending-average-typing-minute").text(averageTypingMinute);
       $(".ending, .ending-win").css("display", "flex");
+
       setTimeout(function() {
         gameApp.typeWriter(".ending-win-title", 50);
+        gameApp.typeWriter(".ending-win-msg", 50);
+        $(".stat-container").addClass("spin");
         gameApp.typeWriter(".ending-number-of-words", 125);
         gameApp.typeWriter(".ending-average-typing-second", 125);
         gameApp.typeWriter(".ending-average-typing-minute", 125);
-      }, 600);
+        gameApp.typeWriter(".ending-win .reset", 25);
+      }, 300);
     }
 
     let wordsOnScreen = $(".word").length;
@@ -428,7 +432,11 @@ gameApp.generateWords = () => {
     // LOSE CONDITION
     if (wordsOnScreen > gameApp.loseCondition) {
       gameApp.gameOver = true;
-      gameApp.typeWriter(".ending-lose-title", 50);
+      setTimeout(function() {
+        gameApp.typeWriter(".ending-lose-title", 50);
+        gameApp.typeWriter(".ending-sorry", 25);
+        gameApp.typeWriter(".ending-lose .reset", 25);
+      }, 300);
       gameApp.playAgain();
       clearInterval(game);
       $(".ending, .ending-lose").css("display", "flex");

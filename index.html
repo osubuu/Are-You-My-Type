@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <link rel="shortcut icon" type="image/png" href="assets/images/Computer-Hardware-Keyboard-icon.png">
+
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
     crossorigin="anonymous">
 
@@ -13,14 +15,14 @@
 
   <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
 
-  <title>Type Type Revolution</title>
+  <title>Are You My Type?</title>
 </head>
 
 <body>
 
   <main class="game-section">
     <div class="bg-top"><i class="fas fa-caret-left"></i><i class="fas fa-caret-right"></i>
-      <div class="file-name">typeTypeRevolution.game</div>
+      <div class="file-name">are_you_my_type.game</div>
       <i class="fas fa-caret-down"></i></div>
     <div class="stats ">
       <h2 class="score">SCORE:
@@ -32,10 +34,15 @@
     </div>
     <div class="bg-bottom">Line 1, Column 1</div>
     <header class="intro">
-      <div class="window-line"></div>
+      <div class="window-line">
+        <i class="fas fa-circle circle-red"></i>
+        <i class="fas fa-circle circle-orange"></i>
+        <i class="fas fa-circle circle-green"></i>
+        <p class="bash-window">1. project_3</p>
+      </div>
       <div class="intro-title">
         <p></p>
-        <h1><span class="blink-text">> </span><span class="welcome blink-cursor">Welcome to TYPE TYPE REVOLUTION</span></h1>
+        <h1><span class="blink-text">> </span><span class="welcome blink-cursor">Welcome, ARE YOU MY TYPE? ;)</span></h1>
         <h4 class="author ">By: KHOI PHAM</h4>
         <button class="read-rules typewriter-3 ">PRESS <span class="enter">ENTER</span> TO CONTINUE</button>
       </div>
@@ -74,19 +81,32 @@
     <section class="ending ">
       <div class="ending-win ">
         <h2 class="ending-win-title">CONGRATULATIONS!</h2>
+        <p class="ending-win-msg">You ARE my type.</p>
         <div class="ending-stats ">
-          <p>You typed: <span class="ending-stat ending-number-of-words">0</span> words</p>
-          <p>Average rate (per second): <span class="ending-stat ending-average-typing-second">0</span>
+          <p class="stat-container">You typed: <span class="ending-stat ending-number-of-words">0</span> words</p>
+          <p class="stat-container">Average rate (per second): <span class="ending-stat ending-average-typing-second">0</span>
             words/second</p>
-          <p>Average rate (per minute): <span class="ending-stat ending-average-typing-minute">0</span>
+          <p class="stat-container">Average rate (per minute): <span class="ending-stat ending-average-typing-minute">0</span>
             words/minute</p>
         </div>
-        <button class="reset ">PRESS <span>ENTER</span> TO PLAY AGAIN</button>
+        <button class="reset">PRESS <span>ENTER</span> TO PLAY AGAIN</button>
+        <div class="credits">
+          <p>Favicon obtained from <a href="http://icons8.com/license/">http://icons8.com/license/</a></p>
+          <p>
+            Icons obtained from <a href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+        </div>
       </div>
       <div class="ending-lose ">
         <h2 class="ending-lose-title">GAME OVER</h2>
-        <p> Keep practicing and try again.</p>
+        <p class="ending-sorry"> Sorry, you're not my type.</p>
         <button class="reset ">PRESS <span>ENTER</span> TO PLAY AGAIN</button>
+
+        <div class="credits">
+          <p>Favicon obtained from <a href="http://icons8.com/license/">http://icons8.com/license/</a></p>
+          <p>
+            Icons obtained from <a href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+        </div>
+
       </div>
     </section>
 
