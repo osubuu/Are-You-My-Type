@@ -560,6 +560,10 @@ button {
   outline: 0;
   font-size: 2.4rem;
   margin-top: 1%;
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .credits {
