@@ -307,7 +307,7 @@ gameApp.listOfWords = [
   ======================= */
 
 // TYPEWRITER EFFECT
-gameApp.typeWriter = className => {
+gameApp.typeWriter = (className, speed) => {
   const word = $(className).text();
   let i = 1;
 
@@ -315,11 +315,12 @@ gameApp.typeWriter = className => {
     if (i > word.length) {
       clearInterval(typeOut);
     }
+
     $(className).text(word.substr(0, i));
     $(className).css("visibility", "visible");
 
     i++;
-  }, 40);
+  }, speed);
 };
 
 // RANDOMIZE
@@ -399,6 +400,7 @@ gameApp.generateWords = () => {
   let game = setInterval(function() {
     // WIN CONDITION
     if (gameApp.score >= gameApp.winningScoreThreshold) {
+      gameApp.gameOver = true;
       gameApp.playAgain();
       clearInterval(game);
       gameApp.endTime = new Date();
@@ -409,22 +411,24 @@ gameApp.generateWords = () => {
       let averageTypingMinute = Math.floor(averageTypingSecond * 60);
 
       // Display ending stats
-      $(".ending-number-of-words")
-        .find("span")
-        .text(gameApp.wordsTyped);
-      $(".ending-average-typing-second")
-        .find("span")
-        .text(averageTypingSecond);
-      $(".ending-average-typing-minute")
-        .find("span")
-        .text(averageTypingMinute);
+      $(".ending-number-of-words").text(gameApp.wordsTyped);
+      $(".ending-average-typing-second").text(averageTypingSecond);
+      $(".ending-average-typing-minute").text(averageTypingMinute);
       $(".ending, .ending-win").css("display", "flex");
+      setTimeout(function() {
+        gameApp.typeWriter(".ending-win-title", 50);
+        gameApp.typeWriter(".ending-number-of-words", 125);
+        gameApp.typeWriter(".ending-average-typing-second", 125);
+        gameApp.typeWriter(".ending-average-typing-minute", 125);
+      }, 600);
     }
 
     let wordsOnScreen = $(".word").length;
 
     // LOSE CONDITION
     if (wordsOnScreen > gameApp.loseCondition) {
+      gameApp.gameOver = true;
+      gameApp.typeWriter(".ending-lose-title", 50);
       gameApp.playAgain();
       clearInterval(game);
       $(".ending, .ending-lose").css("display", "flex");
@@ -519,6 +523,7 @@ gameApp.winningScoreThreshold = 500;
 gameApp.loseCondition = 5;
 gameApp.wordGenerationSpeed = 1500;
 gameApp.currentWordsPositions = [];
+gameApp.gameOver = false;
 
 gameApp.clearWord = function() {
   $("form").on("submit", function(event) {
@@ -551,7 +556,7 @@ gameApp.getInput = function() {
           {
             color: "#a7efae"
           },
-          200
+          300
         );
         gameApp.wordsTyped++;
         gameApp.removeElement($(`#${word.id}`));
@@ -572,21 +577,24 @@ gameApp.getInput = function() {
 /* SHOW RULES  */
 gameApp.showRules = function() {
   setTimeout(function() {
-    gameApp.typeWriter(".welcome");
-  }, 1000);
+    $(".blink-text").removeClass();
+  }, 1750);
   setTimeout(function() {
-    gameApp.typeWriter(".author");
-  }, 2000);
+    gameApp.typeWriter(".welcome", 40);
+  }, 1750);
   setTimeout(function() {
-    gameApp.typeWriter(".read-rules");
-  }, 2000);
+    gameApp.typeWriter(".author", 40);
+  }, 3000);
+  setTimeout(function() {
+    gameApp.typeWriter(".read-rules", 40);
+  }, 3000);
 
   $(document).on("keypress", function(event) {
     if (event.which === 13 && $(".intro-title").is(":visible")) {
       $(".intro-title").slideUp(500);
       $(".intro-rules")
         .delay(500)
-        .slideDown(500);
+        .fadeIn();
       gameApp.startGame();
     }
   });
@@ -594,18 +602,40 @@ gameApp.showRules = function() {
 
 /* START GAME (i.e generate words) */
 gameApp.startGame = function() {
+  setTimeout(function() {
+    gameApp.typeWriter(".rules-title", 40);
+    gameApp.typeWriter(".win-title", 40);
+    gameApp.typeWriter(".lose-title", 40);
+  }, 750);
+  setTimeout(function() {
+    gameApp.typeWriter(".rule-1", 20);
+    gameApp.typeWriter(".rule-2", 20);
+    gameApp.typeWriter(".rule-3", 20);
+    gameApp.typeWriter(".win-1", 20);
+    gameApp.typeWriter(".lose-1", 20);
+    gameApp.typeWriter(".lose-2", 20);
+    gameApp.typeWriter(".game-start", 40);
+  }, 1250);
+
   $(document).one("keypress", function(event) {
     if (event.which === 13 && $(".intro-rules").is(":visible")) {
       $(".intro").slideUp(500);
       $(".score")
-        .find("span")
+        .find(".metric")
         .text(gameApp.score);
       $(".timer")
-        .find("span")
+        .find(".metric")
         .text(gameApp.timerStart);
       $(".score, .timer, .user-input").fadeIn();
+      $(".bg-top, .bg-bottom")
+        .css("display", "flex")
+        .hide()
+        .fadeIn();
       gameApp.startTime = new Date();
-      gameApp.generateWords();
+      setTimeout(function() {
+        gameApp.generateWords();
+      }, 350);
+      $("input").val("");
       $(".user-input").focus();
     }
   });
@@ -621,7 +651,10 @@ gameApp.playAgain = function() {
 
 gameApp.countDown = function(startTime) {
   let remainingTime = startTime;
-  setInterval(function() {
+  let timer = setInterval(function() {
+    if (gameApp.gameOver === true) {
+      clearInterval(timer);
+    }
     remainingTime--;
     $(".timer")
       .find("span")

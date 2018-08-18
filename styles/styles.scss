@@ -192,7 +192,8 @@ li {
 }
 
 .intro {
-  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  background-color: black;
   color: white;
   font-size: 200%;
   position: absolute;
@@ -204,14 +205,93 @@ li {
   justify-content: center;
   align-items: center;
   z-index: 11;
+
+  .window-line {
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: lightgray;
+    position: absolute;
+    height: 30px;
+    top: 0;
+  }
+}
+
+.bg-top {
+  display: none;
+  width: 100%;
+  height: 4vh;
+  position: absolute;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 76, 76, 0.25) 0%,
+    rgba(89, 89, 89, 0.25) 0%,
+    rgba(38, 51, 56, 1) 100%
+  );
+  top: 0;
+  color: white;
+  font-size: 2.25rem;
+  // display: flex;
+  align-items: center;
+  padding-left: 1%;
+
+  .fa-caret-right {
+    margin-left: 1%;
+  }
+
+  .file-name {
+    color: lightgray;
+    padding: 1em;
+    height: 100%;
+    position: absolute;
+    left: 7.5%;
+    font-size: 1.5rem;
+    background-color: rgb(12, 32, 40);
+    border-bottom: 1px solid #42f448;
+  }
+
+  .fa-caret-down {
+    position: absolute;
+    right: 0;
+    padding: 1%;
+  }
+}
+
+.bg-bottom {
+  display: none;
+  align-items: center;
+  padding-left: 1%;
+  width: 100%;
+  height: 3vh;
+  position: absolute;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 76, 76, 0.5) 0%,
+    rgba(89, 89, 89, 0.5) 0%,
+    rgba(14, 42, 53, 1) 100%
+  );
+  bottom: 0;
+  color: white;
+  font-size: 2rem;
 }
 
 .intro-rules {
   text-align: left;
   display: none;
+  width: 60%;
+
+  li {
+    list-style-type: none;
+  }
+
+  li:before {
+    content: "_";
+  }
 }
 
 .stats {
+  position: absolute;
+  top: 4vh;
   display: flex;
   color: black;
   width: 100%;
@@ -235,12 +315,17 @@ li {
   display: none;
   position: absolute;
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
   bottom: 5%;
   align-self: center;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+  text-align: center;
+  background-color: black;
+  color: #42f448;
+  border: none;
+  font-weight: 400;
 }
 
 .words {
@@ -252,19 +337,24 @@ li {
 
 .game-section {
   display: flex;
-  background-image: url(../assets/images/black-wallpaper-dark-full-moon.jpg);
-  background-size: cover;
-  background-position: center;
+  background-color: rgb(12, 32, 40);
   width: 100vw;
   height: 100vh;
+  position: relative;
 }
 
 .score,
 .timer {
-  padding: 1em;
+  padding: 1rem;
+  font-size: 1.75rem;
   display: none;
-  background-color: rgb(207, 207, 186);
+  background-color: black;
   margin: 0;
+  color: white;
+
+  .metric {
+    color: #42f448;
+  }
 }
 
 .word {
@@ -288,7 +378,7 @@ li {
     justify-content: center;
     flex-wrap: wrap;
 
-    .ending-average-typing-second {
+    p:nth-child(2) {
       margin: auto 2%;
     }
 
@@ -296,7 +386,7 @@ li {
       height: 300px;
       width: 300px;
       border-radius: 50%;
-      border: 1px solid white;
+      border: 1px solid #42f448;
       display: block;
       justify-content: center;
       align-items: center;
@@ -310,6 +400,7 @@ li {
       display: block;
       font-size: 300%;
       margin: 1rem 0;
+      color: #42f448;
     }
   }
 
@@ -320,42 +411,29 @@ li {
     display: none;
     flex-direction: column;
     justify-content: center;
+    background-color: black;
     align-items: center;
   }
 
   .ending-win {
-    background-color: teal;
+    .ending-win-title {
+      color: #42f448;
+    }
   }
 
   .ending-lose {
-    background-color: crimson;
+    .ending-lose-title {
+      color: crimson;
+    }
   }
 }
 
 // Code from Geoff Graham on CSS-TRICKS
-.typewriter {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: 0.15em solid #42f448; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  // margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: 0.1em; /* Adjust as needed */
+.blink-cursor {
+  border-right: 0.15em solid #42f448;
+  letter-spacing: 0.1em;
+  animation: blink-caret 0.75s step-end infinite;
 
-  &-blink {
-    animation: typing 1.5s steps(40, end), blink-caret 0.75s step-end infinite;
-  }
-
-  &-no-blink {
-    animation: typing 1.5s steps(40, end), blink-caret 0.75s step-end infinite;
-  }
-
-  @keyframes typing {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
-  }
   @keyframes blink-caret {
     from,
     to {
@@ -367,10 +445,17 @@ li {
   }
 }
 
-.blink-cursor {
-  border-right: 0.15em solid #42f448; /* The typwriter cursor */
-  letter-spacing: 0.1em; /* Adjust as needed */
-  animation: blink-caret 0.75s step-end infinite;
+.blink-text {
+  animation: blink-word 0.75s step-end infinite;
+  @keyframes blink-word {
+    from,
+    to {
+      color: transparent;
+    }
+    50% {
+      color: white;
+    }
+  }
 }
 
 .intro-title {
@@ -382,4 +467,26 @@ li {
   .read-rules {
     visibility: hidden;
   }
+}
+
+.enter {
+  color: #42f448;
+}
+
+.ending-number-of-words,
+.ending-average-typing-second,
+.ending-average-typing-minute {
+  visibility: hidden;
+}
+
+.rules-title,
+.rules,
+.win-title,
+.win-conditions,
+.lose-title,
+.lose-conditions,
+.game-start,
+.ending-win-title,
+.ending-lose-title {
+  visibility: hidden;
 }
