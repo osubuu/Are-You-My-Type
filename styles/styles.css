@@ -196,8 +196,8 @@ li {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  width: 100%;
-  height: 50vh;
+  width: 90%;
+  height: 55vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -215,7 +215,32 @@ li {
     background-color: lightgray;
     position: absolute;
     height: 30px;
-    top: 0; }
+    top: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-left: 1rem; }
+    .intro .window-line .fa-circle, .ending .window-line .fa-circle {
+      font-size: 75%;
+      padding: 0.5rem;
+      text-shadow: 0 0 1px black; }
+    .intro .window-line .circle-green, .ending .window-line .circle-green {
+      color: #6bc05d; }
+    .intro .window-line .circle-orange, .ending .window-line .circle-orange {
+      color: #f3bc61; }
+    .intro .window-line .circle-red, .ending .window-line .circle-red {
+      color: #e66b64; }
+    .intro .window-line .bash-window, .ending .window-line .bash-window {
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      color: black;
+      font-size: 1.75rem; }
 
 .bg-top {
   display: none;
@@ -265,11 +290,12 @@ li {
   font-size: 2rem; }
 
 .intro-rules {
-  text-align: left;
-  display: none;
-  width: 60%; }
+  display: none; }
+  .intro-rules h3 {
+    font-size: 2.5rem; }
   .intro-rules li {
-    list-style-type: none; }
+    list-style-type: none;
+    font-size: 2rem; }
   .intro-rules li:before {
     content: "_"; }
 
@@ -336,7 +362,10 @@ li {
   background-color: #0c2028;
   width: 100vw;
   height: 100vh;
-  position: relative; }
+  position: relative;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
 
 .score,
 .timer {
@@ -360,7 +389,10 @@ li {
 
 .ending {
   height: 100vh;
+  width: 100%;
   display: none; }
+  .ending h2 {
+    font-size: 4rem; }
   .ending .ending-stats {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -372,13 +404,12 @@ li {
     justify-content: center;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap; }
-    .ending .ending-stats p:nth-child(2) {
+    .ending .ending-stats .stat-container:nth-child(2) {
       margin: auto 2%; }
-    .ending .ending-stats p {
+    .ending .ending-stats .stat-container {
       height: 300px;
       width: 300px;
       border-radius: 50%;
-      border: 1px solid #42f448;
       display: block;
       -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -394,8 +425,39 @@ li {
       -ms-flex-direction: column;
       flex-direction: column;
       line-height: 1.15;
-      padding: 1em; }
-    .ending .ending-stats span {
+      padding: 1em;
+      position: relative;
+      overflow: hidden; }
+    .ending .ending-stats .spin {
+      -webkit-animation: border 0.5s linear 1 forwards;
+      animation: border 0.5s linear 1 forwards; }
+
+@-webkit-keyframes border {
+  25% {
+    border-top: 1.5px solid #42f448; }
+  50% {
+    border-top: 1.5px solid #42f448;
+    border-right: 1.5px solid #42f448; }
+  75% {
+    border-top: 1.5px solid #42f448;
+    border-right: 1.5px solid #42f448;
+    border-bottom: 1.5px solid #42f448; }
+  100% {
+    border: 1.5px solid #42f448; } }
+
+@keyframes border {
+  25% {
+    border-top: 1.5px solid #42f448; }
+  50% {
+    border-top: 1.5px solid #42f448;
+    border-right: 1.5px solid #42f448; }
+  75% {
+    border-top: 1.5px solid #42f448;
+    border-right: 1.5px solid #42f448;
+    border-bottom: 1.5px solid #42f448; }
+  100% {
+    border: 1.5px solid #42f448; } }
+    .ending .ending-stats .ending-stat {
       display: block;
       font-size: 300%;
       margin: 1rem 0;
@@ -459,22 +521,23 @@ li {
   50% {
     color: white; } }
 
-.intro-title {
+.intro-title,
+.intro-rules {
   text-align: left;
-  width: 60%; }
-  .intro-title .welcome,
-  .intro-title .author,
-  .intro-title .read-rules {
-    visibility: hidden; }
+  width: 70%; }
+
+.intro-title .author {
+  font-size: 2.2rem; }
 
 .enter {
   color: #42f448; }
 
+.welcome,
+.author,
+.read-rules,
 .ending-number-of-words,
 .ending-average-typing-second,
-.ending-average-typing-minute {
-  visibility: hidden; }
-
+.ending-average-typing-minute,
 .rules-title,
 .rules,
 .win-title,
@@ -483,5 +546,22 @@ li {
 .lose-conditions,
 .game-start,
 .ending-win-title,
-.ending-lose-title {
+.ending-lose-title,
+.ending-try-again,
+.ending-sorry,
+.reset {
   visibility: hidden; }
+
+button {
+  cursor: default;
+  color: black;
+  border: none;
+  outline: 0;
+  font-size: 2.4rem;
+  margin-top: 1%; }
+
+.credits {
+  position: absolute;
+  font-size: 1.5rem;
+  bottom: 1%;
+  left: 1%; }
