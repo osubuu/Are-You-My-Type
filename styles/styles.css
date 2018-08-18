@@ -348,6 +348,8 @@ li {
   color: #42f448;
   border: none;
   font-weight: 400; }
+  .user-input:focus, .user-input:active {
+    outline: 0; }
 
 .words {
   color: white;
@@ -559,8 +561,6 @@ button {
   outline: 0;
   font-size: 2.4rem;
   margin-top: 1%; }
-  button:focus {
-    outline: 0; }
 
 .credits {
   position: absolute;
