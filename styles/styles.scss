@@ -356,8 +356,7 @@ li {
   border: none;
   font-weight: 400;
 
-  &:focus,
-  &:active {
+  &:focus {
     outline: 0;
   }
 }
