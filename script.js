@@ -1,5 +1,7 @@
+/* NAMESPACE */
 const gameApp = {};
 
+/* LIST OF WORDS */
 gameApp.listOfWords = [
   "abject",
   "aberration",
@@ -302,6 +304,7 @@ gameApp.listOfWords = [
   "wily",
   "tirade"
 ];
+
 /* ======================
   GENERAL FUNCTIONS
   ======================= */
@@ -341,7 +344,7 @@ gameApp.wordScore = word => {
   }
 };
 
-// REMOVE WORD WHEN USER CORRECTLY TYPES IN
+/* REMOVE WORD WHEN USER CORRECTLY TYPES IN INPUT */
 gameApp.removeElement = word => {
   word.css("color", "#7df289");
   word.animate({ color: "white" }, { duration: 500, queue: false });
@@ -362,7 +365,7 @@ gameApp.removeElement = word => {
   }, 1000);
 };
 
-// REMOVE WORD BY BECOMING SMALLER
+// 1.REMOVE ANIMATION: BECOMING SMALLER
 gameApp.smallWordRemoval = word => {
   word.animate(
     { fontSize: "25%", opacity: "-=1" },
@@ -370,7 +373,7 @@ gameApp.smallWordRemoval = word => {
   );
 };
 
-// REMOVE WORD BY SPACING OUT
+// 2. REMOVE ANIMATION: HORIZONTALLY SPACING OUT
 gameApp.letterSpacingRemoval = word => {
   word.animate(
     { width: "200%", letterSpacing: "100px", opacity: "-=1" },
@@ -378,12 +381,12 @@ gameApp.letterSpacingRemoval = word => {
   );
 };
 
-// REMOVE WORD BY PUFFING
+// 3. REMOVE ANIMATION: JQUERY UI PUFFING
 gameApp.puffRemoval = word => {
   word.effect("puff");
 };
 
-// REMOVE WORD WORD BY ERASER EFFECT
+// 4. REMOVE ANIMATION: ERASER EFFECT
 gameApp.eraserRemoval = word => {
   let erase = function() {
     word.text(word.text().substr(0, word.text().length - 1));
@@ -395,14 +398,131 @@ gameApp.eraserRemoval = word => {
   erase();
 };
 
+// CLEAR WORD IN INPUT BOX
+gameApp.clearWord = function() {
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+    $("input").val("");
+  });
+};
+
+/* ======================
+  GLOBAL VARIABLES
+  ======================= */
+gameApp.score = 0;
+gameApp.wordsTyped = 0;
+gameApp.wordCounter = 1;
+gameApp.timerStart = 60;
+gameApp.startTime = 0;
+gameApp.endTime = 0;
+gameApp.winningScoreThreshold = 500;
+gameApp.loseCondition = 5;
+gameApp.wordGenerationSpeed = 1500;
+gameApp.currentWordsPositions = [];
+gameApp.gameOver = false;
+
+/* ======================
+  A. INTRODUCTION SLIDES
+  ======================= */
+
+/* A1. SHOW RULES FUNCTION */
+gameApp.showRules = function() {
+  // Display intro text
+  setTimeout(function() {
+    $(".blink-text").removeClass();
+  }, 1750);
+  setTimeout(function() {
+    gameApp.typeWriter(".welcome", 40);
+  }, 1750);
+  setTimeout(function() {
+    gameApp.typeWriter(".author", 40);
+  }, 3000);
+  setTimeout(function() {
+    gameApp.typeWriter(".read-rules", 40);
+  }, 3000);
+
+  // Listen for ENTER to continue
+  $(document).on("keypress", function(event) {
+    if (event.which === 13 && $(".intro-title").is(":visible")) {
+      // Display welcome
+      $(".intro-title").slideUp(500);
+      $(".intro-rules")
+        .delay(500)
+        .fadeIn();
+
+      // Go to start game event handler
+      gameApp.startGame();
+    }
+  });
+};
+
+/* A2. START GAME FUNCTION (i.e initiate the generatation of words) */
+gameApp.startGame = function() {
+  // Display rules
+  setTimeout(function() {
+    gameApp.typeWriter(".rules-title", 40);
+    gameApp.typeWriter(".win-title", 40);
+    gameApp.typeWriter(".lose-title", 40);
+  }, 750);
+  setTimeout(function() {
+    gameApp.typeWriter(".rule-1", 20);
+    gameApp.typeWriter(".rule-2", 20);
+    gameApp.typeWriter(".rule-3", 20);
+    gameApp.typeWriter(".win-1", 20);
+    gameApp.typeWriter(".lose-1", 20);
+    gameApp.typeWriter(".lose-2", 20);
+    gameApp.typeWriter(".game-start", 40);
+  }, 1250);
+
+  // Listen for ENTER to continue
+  $(document).one("keypress", function(event) {
+    if (event.which === 13 && $(".intro-rules").is(":visible")) {
+      // Prepare the gaming background
+      $(".intro").slideUp(500);
+      $(".score")
+        .find(".metric")
+        .text(gameApp.score);
+      $(".timer")
+        .find(".metric")
+        .text(gameApp.timerStart);
+      $(".score, .timer, .user-input").fadeIn();
+      $(".bg-top, .bg-bottom")
+        .css("display", "flex")
+        .hide()
+        .fadeIn();
+
+      // Get the starting time stamp
+      gameApp.startTime = new Date();
+
+      // Start the game
+      setTimeout(function() {
+        gameApp.generateWords();
+      }, 350);
+
+      // Clear any previous word input and turn focus to input box
+      $("input").val("");
+      $(".user-input").focus();
+    }
+  });
+};
+
+/* ======================
+  B. MAIN GAME FUNCTIONALITIES
+  ======================= */
+
+/* B1. MAIN FUNCTION THAT GENERATES WORDS AND
+CHECKS FOR WIN/LOSE CONDITIONS */
 gameApp.generateWords = () => {
   gameApp.countDown(gameApp.timerStart);
   let game = setInterval(function() {
     // WIN CONDITION
     if (gameApp.score >= gameApp.winningScoreThreshold) {
+      // Stop the game
       gameApp.gameOver = true;
-      gameApp.playAgain();
       clearInterval(game);
+      gameApp.playAgain();
+
+      // Calculate duration and typing rate
       gameApp.endTime = new Date();
       let averageTypingSecond = (
         gameApp.wordsTyped /
@@ -410,12 +530,13 @@ gameApp.generateWords = () => {
       ).toFixed(2);
       let averageTypingMinute = Math.floor(averageTypingSecond * 60);
 
-      // Display ending stats
+      // Put ending stats on DOM
       $(".ending-number-of-words").text(gameApp.wordsTyped);
       $(".ending-average-typing-second").text(averageTypingSecond);
       $(".ending-average-typing-minute").text(averageTypingMinute);
       $(".ending, .ending-win").css("display", "flex");
 
+      // Display ending messages
       setTimeout(function() {
         gameApp.typeWriter(".ending-win-title", 50);
         gameApp.typeWriter(".ending-win-msg", 50);
@@ -427,18 +548,22 @@ gameApp.generateWords = () => {
       }, 300);
     }
 
+    // Calculate number of words on screen
     let wordsOnScreen = $(".word").length;
 
     // LOSE CONDITION
     if (wordsOnScreen > gameApp.loseCondition) {
+      // Stop the game
       gameApp.gameOver = true;
+      gameApp.playAgain();
+      clearInterval(game);
+
+      // Display losing messages
       setTimeout(function() {
         gameApp.typeWriter(".ending-lose-title", 50);
         gameApp.typeWriter(".ending-sorry", 25);
         gameApp.typeWriter(".ending-lose .reset", 25);
       }, 300);
-      gameApp.playAgain();
-      clearInterval(game);
       $(".ending, .ending-lose").css("display", "flex");
     }
 
@@ -449,7 +574,7 @@ gameApp.generateWords = () => {
 
     // Calculate random positions
     let wordXPosition = `${gameApp.random(90)}%`;
-    let WordYPosition = `${gameApp.random(80) + 10}%`;
+    let WordYPosition = `${gameApp.random(80) + 12}%`;
 
     // Display word on screen at random location
     let wordId = `word-${gameApp.wordCounter}`;
@@ -459,6 +584,8 @@ gameApp.generateWords = () => {
       left: wordXPosition,
       visibility: "hidden"
     });
+
+    // Check if new word is overlapping with one of the current words
     gameApp.detectCollision($(`#${wordId}`));
 
     // increment word counter for next random word id
@@ -466,7 +593,51 @@ gameApp.generateWords = () => {
   }, gameApp.wordGenerationSpeed);
 };
 
-// Collision Detection to minimize words overlapping with each other
+/* B2. FUNCTION TO LISTEN FOR USER INPUT */
+gameApp.getInput = function() {
+  $("input").on("input", function() {
+    // get user word
+    let userWord = $("input")
+      .val()
+      .trim();
+
+    // make an object of current words on screen
+    let currentWords = $(".word");
+
+    // loop through this object to see if user input matches any of the current words
+    let match = false;
+    for (let i = 0; i < currentWords.length; i++) {
+      let word = currentWords[i];
+
+      // if input word matches with any word on screen
+      if (word.innerText === userWord) {
+        match = true;
+        $(".user-input").effect(
+          "highlight",
+          {
+            color: "#a7efae"
+          },
+          300
+        );
+        // remove word from screen
+        gameApp.removeElement($(`#${word.id}`));
+
+        // increment score
+        gameApp.score += gameApp.wordScore(word.innerText);
+        gameApp.wordsTyped++;
+        $(".score")
+          .find("span")
+          .text(gameApp.score);
+
+        // clear input field
+        $("input").val("");
+      }
+    }
+  });
+};
+
+/* B3. COLLISION DETECTION FUNCTION TO CHECK IF
+ANY OF THE CURRENT WORDS ARE OVERLAPPING WITH NEW WORD*/
 gameApp.detectCollision = function(word) {
   let top = word.position().top;
   let left = word.position().left;
@@ -486,13 +657,13 @@ gameApp.detectCollision = function(word) {
       .fadeIn();
   } else {
     // compare newly generated word's position to every words' positions on the screen
-
     for (let i = 0; i < gameApp.currentWordsPositions.length; i++) {
       let currentTop = gameApp.currentWordsPositions[i].top;
       let currentBot = gameApp.currentWordsPositions[i].bottom;
       let currentLeft = gameApp.currentWordsPositions[i].left;
       let currentRight = gameApp.currentWordsPositions[i].right;
 
+      // collision condition
       if (
         ((top > currentTop && top < currentBot) ||
           (bottom < currentBot && bottom > currentTop)) &&
@@ -502,17 +673,17 @@ gameApp.detectCollision = function(word) {
         // assign new position to word if collusion is detected
         // and call the collision function again to check if new position is valid
         let newXPosition = `${gameApp.random(90)}%`;
-        let newYPosition = `${gameApp.random(80) + 10}%`;
+        let newYPosition = `${gameApp.random(80) + 12}%`;
         word.css({
           bottom: newYPosition,
           left: newXPosition,
           visibility: "hidden"
         });
+        // check if newly reassigned word collides with any words
         gameApp.detectCollision(word);
       }
     }
-    // if no collision, add newly generated word into array of all words on screen
-    // and show the word on screen
+    // if no collision, add newly generated word into array of all words on screen and show the word on screen
     gameApp.currentWordsPositions.push(positions);
     word
       .css({ visibility: "visible" })
@@ -521,142 +692,7 @@ gameApp.detectCollision = function(word) {
   }
 };
 
-gameApp.score = 0;
-gameApp.wordsTyped = 0;
-gameApp.wordCounter = 1;
-gameApp.timerStart = 60;
-gameApp.startTime = 0;
-gameApp.endTime = 0;
-gameApp.winningScoreThreshold = 500;
-gameApp.loseCondition = 5;
-gameApp.wordGenerationSpeed = 1500;
-gameApp.currentWordsPositions = [];
-gameApp.gameOver = false;
-
-gameApp.clearWord = function() {
-  $("form").on("submit", function(event) {
-    event.preventDefault();
-    $("input").val("");
-  });
-};
-
-/* ======================
-  GET USER INPUT AND COMPARE TO CURRENT WORDS
-  ======================= */
-gameApp.getInput = function() {
-  $("input").on("input", function() {
-    // get user word
-    let userWord = $("input")
-      .val()
-      .trim();
-
-    // make an object of current words on screen
-    let currentWords = $(".word");
-
-    // loop through this object to see if user input matches any of the current words
-    let match = false;
-    for (let i = 0; i < currentWords.length; i++) {
-      let word = currentWords[i];
-      if (word.innerText === userWord) {
-        match = true;
-        $(".user-input").effect(
-          "highlight",
-          {
-            color: "#a7efae"
-          },
-          300
-        );
-        gameApp.wordsTyped++;
-        gameApp.removeElement($(`#${word.id}`));
-        gameApp.score += gameApp.wordScore(word.innerText);
-        $(".score")
-          .find("span")
-          .text(gameApp.score);
-        $("input").val("");
-      }
-    }
-  });
-};
-
-/* ======================
-  INTRODUCTION SLIDES
-  ======================= */
-
-/* SHOW RULES  */
-gameApp.showRules = function() {
-  setTimeout(function() {
-    $(".blink-text").removeClass();
-  }, 1750);
-  setTimeout(function() {
-    gameApp.typeWriter(".welcome", 40);
-  }, 1750);
-  setTimeout(function() {
-    gameApp.typeWriter(".author", 40);
-  }, 3000);
-  setTimeout(function() {
-    gameApp.typeWriter(".read-rules", 40);
-  }, 3000);
-
-  $(document).on("keypress", function(event) {
-    if (event.which === 13 && $(".intro-title").is(":visible")) {
-      $(".intro-title").slideUp(500);
-      $(".intro-rules")
-        .delay(500)
-        .fadeIn();
-      gameApp.startGame();
-    }
-  });
-};
-
-/* START GAME (i.e generate words) */
-gameApp.startGame = function() {
-  setTimeout(function() {
-    gameApp.typeWriter(".rules-title", 40);
-    gameApp.typeWriter(".win-title", 40);
-    gameApp.typeWriter(".lose-title", 40);
-  }, 750);
-  setTimeout(function() {
-    gameApp.typeWriter(".rule-1", 20);
-    gameApp.typeWriter(".rule-2", 20);
-    gameApp.typeWriter(".rule-3", 20);
-    gameApp.typeWriter(".win-1", 20);
-    gameApp.typeWriter(".lose-1", 20);
-    gameApp.typeWriter(".lose-2", 20);
-    gameApp.typeWriter(".game-start", 40);
-  }, 1250);
-
-  $(document).one("keypress", function(event) {
-    if (event.which === 13 && $(".intro-rules").is(":visible")) {
-      $(".intro").slideUp(500);
-      $(".score")
-        .find(".metric")
-        .text(gameApp.score);
-      $(".timer")
-        .find(".metric")
-        .text(gameApp.timerStart);
-      $(".score, .timer, .user-input").fadeIn();
-      $(".bg-top, .bg-bottom")
-        .css("display", "flex")
-        .hide()
-        .fadeIn();
-      gameApp.startTime = new Date();
-      setTimeout(function() {
-        gameApp.generateWords();
-      }, 350);
-      $("input").val("");
-      $(".user-input").focus();
-    }
-  });
-};
-
-gameApp.playAgain = function() {
-  $(document).on("keypress", function(event) {
-    if (event.which === 13 && $(".reset").is(":visible")) {
-      window.location.reload();
-    }
-  });
-};
-
+/* B4. TIMER COUNTDOWN FUNCTION */
 gameApp.countDown = function(startTime) {
   let remainingTime = startTime;
   let timer = setInterval(function() {
@@ -668,6 +704,19 @@ gameApp.countDown = function(startTime) {
       .find("span")
       .text(remainingTime);
   }, 1000);
+};
+
+/* ======================
+  C. ENDING SLIDE
+  ======================= */
+
+/* C1. PLAY AGAIN EVENT LISTENER */
+gameApp.playAgain = function() {
+  $(document).on("keypress", function(event) {
+    if (event.which === 13 && $(".reset").is(":visible")) {
+      window.location.reload();
+    }
+  });
 };
 
 /* ======================
