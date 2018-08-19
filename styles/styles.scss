@@ -180,10 +180,6 @@ html {
   font-family: "Anonymous Pro", monospace;
 }
 
-main {
-  position: relative;
-}
-
 ol,
 li {
   margin: 0;
@@ -191,6 +187,138 @@ li {
   list-style-position: inside;
 }
 
+/* ======================
+GENERAL STYLING
+====================== */
+ol,
+li {
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+}
+
+.welcome,
+.author,
+.read-rules,
+.ending-number-of-words,
+.ending-average-typing-second,
+.ending-average-typing-minute,
+.rules-title,
+.rules,
+.win-title,
+.win-conditions,
+.lose-title,
+.lose-conditions,
+.game-start,
+.ending-win-title,
+.ending-lose-title,
+.ending-try-again,
+.ending-sorry,
+.reset {
+  visibility: hidden;
+}
+
+button {
+  cursor: default;
+  color: black;
+  border: none;
+  outline: 0;
+  font-size: 2.4rem;
+  margin-top: 0.5em;
+}
+
+a {
+  color: #42f448;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+/* ======================
+OVERALL BACKGROUND
+====================== */
+
+.game-section {
+  display: flex;
+  background-color: rgb(12, 32, 40);
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  justify-content: center;
+}
+
+.bg-top {
+  display: none;
+  width: 100%;
+  height: 4vh;
+  position: absolute;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 76, 76, 0.25) 0%,
+    rgba(89, 89, 89, 0.25) 0%,
+    rgba(38, 51, 56, 1) 100%
+  );
+  top: 0;
+  color: white;
+  font-size: 2.25rem;
+  align-items: center;
+  padding-left: 1%;
+
+  .fa-caret-right {
+    margin-left: 1%;
+  }
+
+  .file-name {
+    color: lightgray;
+    padding: 1em;
+    padding-bottom: 1.5em;
+    height: 100%;
+    position: absolute;
+    left: 108px;
+    font-size: 1.5rem;
+    background-color: rgb(12, 32, 40);
+    border-bottom: 1px solid #42f448;
+  }
+
+  .fa-caret-down {
+    position: absolute;
+    right: 0;
+    padding: 1%;
+  }
+}
+
+.bg-bottom {
+  display: none;
+  align-items: center;
+  padding-left: 1%;
+  width: 100%;
+  height: 3vh;
+  position: absolute;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 76, 76, 0.5) 0%,
+    rgba(89, 89, 89, 0.5) 0%,
+    rgba(14, 42, 53, 1) 100%
+  );
+  bottom: 0;
+  color: white;
+  font-size: 2rem;
+}
+
+.stats {
+  position: absolute;
+  top: 4vh;
+  display: flex;
+  color: black;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ======================
+INTRODUCTION PART OF GAME
+====================== */
 .intro {
   border-radius: 10px;
   background-color: black;
@@ -243,64 +371,6 @@ li {
   }
 }
 
-.bg-top {
-  display: none;
-  width: 100%;
-  height: 4vh;
-  position: absolute;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(76, 76, 76, 0.25) 0%,
-    rgba(89, 89, 89, 0.25) 0%,
-    rgba(38, 51, 56, 1) 100%
-  );
-  top: 0;
-  color: white;
-  font-size: 2.25rem;
-  // display: flex;
-  align-items: center;
-  padding-left: 1%;
-
-  .fa-caret-right {
-    margin-left: 1%;
-  }
-
-  .file-name {
-    color: lightgray;
-    padding: 1em;
-    height: 100%;
-    position: absolute;
-    left: 7.5%;
-    font-size: 1.5rem;
-    background-color: rgb(12, 32, 40);
-    border-bottom: 1px solid #42f448;
-  }
-
-  .fa-caret-down {
-    position: absolute;
-    right: 0;
-    padding: 1%;
-  }
-}
-
-.bg-bottom {
-  display: none;
-  align-items: center;
-  padding-left: 1%;
-  width: 100%;
-  height: 3vh;
-  position: absolute;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(76, 76, 76, 0.5) 0%,
-    rgba(89, 89, 89, 0.5) 0%,
-    rgba(14, 42, 53, 1) 100%
-  );
-  bottom: 0;
-  color: white;
-  font-size: 2rem;
-}
-
 .intro-rules {
   display: none;
 
@@ -315,178 +385,6 @@ li {
 
   li:before {
     content: "_";
-  }
-}
-
-.stats {
-  position: absolute;
-  top: 4vh;
-  display: flex;
-  color: black;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.wrapper {
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.user-form {
-  align-self: center;
-}
-
-.user-input {
-  display: none;
-  position: absolute;
-  padding: 1rem;
-  font-size: 2.5rem;
-  bottom: 5%;
-  align-self: center;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  text-align: center;
-  background-color: black;
-  color: #42f448;
-  border: none;
-  font-weight: 400;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.words {
-  color: white;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.game-section {
-  display: flex;
-  background-color: rgb(12, 32, 40);
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  justify-content: center;
-}
-
-.score,
-.timer {
-  padding: 1rem;
-  font-size: 1.75rem;
-  display: none;
-  background-color: black;
-  margin: 0;
-  color: white;
-
-  .metric {
-    color: #42f448;
-  }
-}
-
-.word {
-  font-size: 3rem;
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-}
-
-.ending {
-  @extend .intro;
-  height: 100vh;
-  width: 100%;
-  display: none;
-
-  h2 {
-    font-size: 4rem;
-  }
-
-  .ending-stats {
-    display: flex;
-    text-align: center;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    .stat-container:nth-child(2) {
-      margin: auto 2%;
-    }
-
-    .stat-container {
-      height: 300px;
-      width: 300px;
-      border-radius: 50%;
-      display: block;
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-      padding: 1em;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .spin {
-      animation: border 0.5s linear 1 forwards;
-    }
-
-    @keyframes border {
-      25% {
-        border-top: 1.5px solid #42f448;
-      }
-      50% {
-        border-top: 1.5px solid #42f448;
-        border-right: 1.5px solid #42f448;
-      }
-      75% {
-        border-top: 1.5px solid #42f448;
-        border-right: 1.5px solid #42f448;
-        border-bottom: 1.5px solid #42f448;
-      }
-      100% {
-        border: 1.5px solid #42f448;
-      }
-    }
-
-    .ending-stat {
-      display: block;
-      font-size: 300%;
-      margin: 1rem 0;
-      color: #42f448;
-    }
-  }
-
-  .ending-win,
-  .ending-lose {
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    background-color: black;
-    align-items: center;
-  }
-
-  .ending-win {
-    .ending-win-title {
-      color: #42f448;
-    }
-  }
-
-  .ending-lose {
-    .ending-lose-title {
-      color: crimson;
-    }
   }
 }
 
@@ -532,43 +430,397 @@ li {
   }
 }
 
-.enter {
+/* ======================
+STYLING FOR THE MAIN GAME PAGE
+====================== */
+
+.word-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.user-form {
+  align-self: center;
+}
+
+.user-input {
+  display: none;
+  position: absolute;
+  padding: 1rem;
+  font-size: 2.5rem;
+  bottom: 5%;
+  align-self: center;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  background-color: black;
   color: #42f448;
-}
-
-.welcome,
-.author,
-.read-rules,
-.ending-number-of-words,
-.ending-average-typing-second,
-.ending-average-typing-minute,
-.rules-title,
-.rules,
-.win-title,
-.win-conditions,
-.lose-title,
-.lose-conditions,
-.game-start,
-.ending-win-title,
-.ending-lose-title,
-.ending-try-again,
-.ending-sorry,
-.reset {
-  visibility: hidden;
-}
-
-button {
-  cursor: default;
-  color: black;
   border: none;
-  outline: 0;
-  font-size: 2.4rem;
-  margin-top: 1%;
+  font-weight: 400;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.words {
+  color: white;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.score,
+.timer {
+  padding: 1rem;
+  font-size: 2rem;
+  display: none;
+  background-color: black;
+  margin: 0;
+  color: white;
+
+  .metric {
+    color: #42f448;
+  }
+}
+
+.word {
+  font-size: 3rem;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+/* ======================
+STYLING FOR THE ENDING GAME SECTIONS
+====================== */
+
+.ending {
+  @extend .intro;
+  height: 100vh;
+  width: 100%;
+  display: none;
+
+  h2 {
+    font-size: 4rem;
+  }
+
+  .ending-stats {
+    display: flex;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .stat-container:nth-child(2) {
+      margin: auto 2%;
+    }
+
+    .stat-container {
+      height: 300px;
+      width: 300px;
+      border-radius: 50%;
+      display: block;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      padding: 1em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spin {
+      animation: border 1.25s linear 1 forwards;
+    }
+
+    @keyframes border {
+      25% {
+        border-top: 1.5px solid #42f448;
+      }
+      50% {
+        border-top: 1.5px solid #42f448;
+        border-right: 1.5px solid #42f448;
+      }
+      75% {
+        border-top: 1.5px solid #42f448;
+        border-right: 1.5px solid #42f448;
+        border-bottom: 1.5px solid #42f448;
+      }
+      100% {
+        border: 1.5px solid #42f448;
+      }
+    }
+
+    .ending-stat {
+      display: block;
+      font-size: 300%;
+      margin: 1rem 0;
+      color: #42f448;
+    }
+  }
+
+  .ending-win,
+  .ending-lose {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    background-color: black;
+    align-items: center;
+  }
+
+  .ending-win {
+    .ending-win-title {
+      color: #42f448;
+      margin: 0;
+    }
+  }
+
+  .ending-lose {
+    .ending-lose-title {
+      color: crimson;
+    }
+  }
 }
 
 .credits {
   position: absolute;
   font-size: 1.5rem;
-  bottom: 1%;
-  left: 1%;
+  bottom: 10px;
+  left: 10px;
+
+  p {
+    margin: 0;
+  }
+}
+
+/* ======================
+MEDIA QUERIES
+====================== */
+
+/* DECREASE CIRCULAR ENDING STATS SIZE */
+@media all and (max-width: 950px) {
+  .ending {
+    .ending-stats {
+      .stat-container {
+        width: 225px;
+        height: 225px;
+      }
+
+      .ending-stat {
+        font-size: 200%;
+      }
+    }
+  }
+}
+
+/* DECREASE H3 SIZES */
+@media all and (max-width: 900px) {
+  .intro-rules {
+    font-size: 35%;
+
+    h3 {
+      margin: 0.5em 0;
+    }
+  }
+}
+
+/* ALIGN CIRCULAR STATS IN COLUMN */
+@media all and (max-height: 750px) and (max-width: 600px) {
+  .ending {
+    .ending-stats {
+      flex-direction: column;
+      align-items: center;
+
+      .stat-container:first-child {
+        margin: 0 0 1% 0;
+      }
+      .stat-container:last-child {
+        margin: 1% 0 0 0;
+      }
+      .stat-container:nth-child(2) {
+        display: none;
+      }
+
+      .stat-container {
+        width: 225px;
+        height: 225px;
+      }
+    }
+  }
+}
+
+/* READJUST INTRO TERMINAL SIZE TO INCLUDE ALL TEXT */
+@media all and (max-height: 800px) {
+  .intro {
+    height: 70vh;
+  }
+
+  .ending {
+    height: 100vh;
+  }
+}
+
+/* READJUST INTRO TERMINAL SIZE TO INCLUDE ALL TEXT */
+@media all and (max-height: 600px) {
+  .intro {
+    height: 75vh;
+
+    h3 {
+      font-size: 2rem;
+    }
+  }
+  .ending {
+    height: 100vh;
+    .ending-stats {
+      font-size: 85%;
+    }
+  }
+}
+
+/* DECREASE CIRCULAR ENDING STATS SIZE */
+@media all and (max-width: 700px), all and(max-height: 650px) {
+  .ending {
+    .ending-stats {
+      .stat-container {
+        width: 225px;
+        height: 225px;
+      }
+    }
+  }
+}
+
+/* INCREASE WIDTH FOR RULES */
+@media all and (max-width: 525px) {
+  html {
+    font-size: 50%;
+  }
+
+  .word-wrapper {
+    width: 60%;
+  }
+
+  .intro-title,
+  .intro-rules {
+    width: 85%;
+    li {
+      font-size: 2rem;
+    }
+  }
+}
+
+/* DISPLAY ENDING ITEMS IN COLUMN */
+@media all and (max-width: 500px), all and (max-height: 575px) {
+  .ending {
+    .ending-win-title {
+      font-size: 3rem;
+    }
+    .ending-stats {
+      flex-direction: column;
+      align-items: center;
+
+      .stat-container:first-child {
+        margin: 0 0 2% 0;
+      }
+      .stat-container:last-child {
+        margin: 2% 0 0 0;
+      }
+      .stat-container:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}
+
+/* READJUST INTRO TERMINAL SIZE TO INCLUDE ALL TEXT
+AND DISPLAY ENDING STATS IN ROW */
+@media all and (max-height: 450px) {
+  html {
+    font-size: 47.5%;
+  }
+
+  .intro {
+    height: 80vh;
+
+    .intro-title,
+    .intro-rules {
+      width: 90%;
+    }
+  }
+
+  .ending {
+    .ending-stats {
+      flex-direction: row;
+
+      .stat-container {
+        height: 175px;
+        width: 175px;
+      }
+
+      .stat-container:first-child {
+        margin: 0 1% 0 0;
+      }
+      .stat-container:last-child {
+        margin: 0 0 0 1%;
+      }
+    }
+    .credits {
+      display: none;
+    }
+  }
+}
+
+/* DECREASE CIRCULAR ENDING STATS SIZE */
+@media all and (max-width: 400px) {
+  .ending {
+    .ending-stats {
+      .stat-container {
+        width: 180px;
+        height: 180px;
+        font-size: 92.5%;
+      }
+    }
+  }
+}
+
+/* DECREASE CIRCULAR ENDING STATS SIZE */
+@media all and (max-width: 350px) {
+  .ending {
+    .ending-stats {
+      .stat-container {
+        width: 150px;
+        height: 150px;
+        font-size: 92.5%;
+      }
+    }
+  }
+  .bg-top {
+    .file-name {
+      left: 86px;
+    }
+  }
+
+  .intro-title,
+  .intro-rules {
+    width: 85%;
+    li {
+      font-size: 1.75rem;
+    }
+  }
+}
+
+/* DECREASE GENERAL FONT SIZES FOR SMALLEST DEVICES */
+@media all and (max-height: 350px) {
+  html {
+    font-size: 40%;
+  }
 }
