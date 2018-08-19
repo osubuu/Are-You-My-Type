@@ -361,7 +361,8 @@ INTRODUCTION PART OF GAME
       -ms-transform: translateX(-50%);
       transform: translateX(-50%);
       color: black;
-      font-size: 1.75rem; }
+      font-size: 1.75rem;
+      margin: 0; }
 
 .intro-rules {
   display: none; }
