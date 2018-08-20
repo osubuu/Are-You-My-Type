@@ -442,8 +442,11 @@ gameApp.showRules = function() {
   }, 3000);
 
   // Listen for ENTER to continue
-  $(document).on("keypress", function(event) {
-    if (event.which === 13 && $(".intro-title").is(":visible")) {
+  $(document).on("keypress click", function(event) {
+    if (
+      (event.which === 13 || $(".read-rules").data("clicked", true)) &&
+      $(".intro-title").is(":visible")
+    ) {
       // Display welcome
       $(".intro-title").slideUp(500);
       $(".intro-rules")
@@ -475,8 +478,11 @@ gameApp.startGame = function() {
   }, 1250);
 
   // Listen for ENTER to continue
-  $(document).one("keypress", function(event) {
-    if (event.which === 13 && $(".intro-rules").is(":visible")) {
+  $(document).one("keypress click", function(event) {
+    if (
+      (event.which === 13 || $(".game-start").data("clicked", true)) &&
+      $(".intro-rules").is(":visible")
+    ) {
       // Prepare the gaming background
       $(".intro").slideUp(500);
       $(".score")
@@ -574,7 +580,7 @@ gameApp.generateWords = () => {
 
     // Calculate random positions
     let wordXPosition = `${gameApp.random(90)}%`;
-    let WordYPosition = `${gameApp.random(80) + 12}%`;
+    let WordYPosition = `${gameApp.random(73) + 12}%`;
 
     // Display word on screen at random location
     let wordId = `word-${gameApp.wordCounter}`;
@@ -673,7 +679,7 @@ gameApp.detectCollision = function(word) {
         // assign new position to word if collusion is detected
         // and call the collision function again to check if new position is valid
         let newXPosition = `${gameApp.random(90)}%`;
-        let newYPosition = `${gameApp.random(80) + 12}%`;
+        let newYPosition = `${gameApp.random(73) + 12}%`;
         word.css({
           bottom: newYPosition,
           left: newXPosition,
@@ -712,8 +718,11 @@ gameApp.countDown = function(startTime) {
 
 /* C1. PLAY AGAIN EVENT LISTENER */
 gameApp.playAgain = function() {
-  $(document).on("keypress", function(event) {
-    if (event.which === 13 && $(".reset").is(":visible")) {
+  $(document).on("keypress click", function(event) {
+    if (
+      event.which === 13 ||
+      ($(".reset").data("clicked", true) && $(".reset").is(":visible"))
+    ) {
       window.location.reload();
     }
   });
