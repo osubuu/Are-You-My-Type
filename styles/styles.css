@@ -719,7 +719,9 @@ AND DISPLAY ENDING STATS IN ROW */
   .ending .ending-stats .stat-container {
     width: 180px;
     height: 180px;
-    font-size: 92.5%; } }
+    font-size: 92.5%; }
+  .words {
+    width: 60%; } }
 
 /* DECREASE CIRCULAR ENDING STATS SIZE */
 @media all and (max-width: 350px) {
