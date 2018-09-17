@@ -367,18 +367,12 @@ gameApp.removeElement = word => {
 
 // 1.REMOVE ANIMATION: BECOMING SMALLER
 gameApp.smallWordRemoval = word => {
-  word.animate(
-    { fontSize: "25%", opacity: "-=1" },
-    { duration: 1000, queue: false }
-  );
+  word.animate({ fontSize: "25%", opacity: "-=1" }, { duration: 1000, queue: false });
 };
 
 // 2. REMOVE ANIMATION: HORIZONTALLY SPACING OUT
 gameApp.letterSpacingRemoval = word => {
-  word.animate(
-    { width: "200%", letterSpacing: "100px", opacity: "-=1" },
-    { duration: 1000, queue: false }
-  );
+  word.animate({ width: "200%", letterSpacing: "100px", opacity: "-=1" }, { duration: 1000, queue: false });
 };
 
 // 3. REMOVE ANIMATION: JQUERY UI PUFFING
@@ -412,11 +406,11 @@ gameApp.clearWord = function() {
 gameApp.score = 0;
 gameApp.wordsTyped = 0;
 gameApp.wordCounter = 1;
-gameApp.timerStart = 60;
+gameApp.timerStart = 90;
 gameApp.startTime = 0;
 gameApp.endTime = 0;
 gameApp.winningScoreThreshold = 2500;
-gameApp.loseCondition = 10;
+gameApp.loseCondition = 45;
 gameApp.wordGenerationSpeed = 1500;
 gameApp.currentWordsPositions = [];
 gameApp.gameOver = false;
@@ -442,11 +436,8 @@ gameApp.showRules = function() {
   }, 3000);
 
   // Listen for ENTER to continue
-  $(document).on("keypress click", function(event) {
-    if (
-      (event.which === 13 || $(".read-rules").data("clicked", true)) &&
-      $(".intro-title").is(":visible")
-    ) {
+  $(document).on("keypress", function(event) {
+    if (event.which === 13 && $(".intro-title").is(":visible")) {
       // Display welcome
       $(".intro-title").slideUp(500);
       $(".intro-rules")
@@ -478,11 +469,8 @@ gameApp.startGame = function() {
   }, 1250);
 
   // Listen for ENTER to continue
-  $(document).one("keypress click", function(event) {
-    if (
-      (event.which === 13 || $(".game-start").data("clicked", true)) &&
-      $(".intro-rules").is(":visible")
-    ) {
+  $(document).one("keypress", function(event) {
+    if (event.which === 13 && $(".intro-rules").is(":visible")) {
       // Prepare the gaming background
       $(".intro").slideUp(500);
       $(".score")
@@ -530,10 +518,7 @@ gameApp.generateWords = () => {
 
       // Calculate duration and typing rate
       gameApp.endTime = new Date();
-      let averageTypingSecond = (
-        gameApp.wordsTyped /
-        ((gameApp.endTime - gameApp.startTime) / 1000)
-      ).toFixed(2);
+      let averageTypingSecond = (gameApp.wordsTyped / ((gameApp.endTime - gameApp.startTime) / 1000)).toFixed(2);
       let averageTypingMinute = Math.floor(averageTypingSecond * 60);
 
       // Put ending stats on DOM
@@ -645,6 +630,7 @@ gameApp.getInput = function() {
 /* B3. COLLISION DETECTION FUNCTION TO CHECK IF
 ANY OF THE CURRENT WORDS ARE OVERLAPPING WITH NEW WORD*/
 gameApp.detectCollision = function(word) {
+  let collision = false;
   let top = word.position().top;
   let left = word.position().left;
   let width = word.width();
@@ -663,38 +649,64 @@ gameApp.detectCollision = function(word) {
       .fadeIn();
   } else {
     // compare newly generated word's position to every words' positions on the screen
+
     for (let i = 0; i < gameApp.currentWordsPositions.length; i++) {
       let currentTop = gameApp.currentWordsPositions[i].top;
       let currentBot = gameApp.currentWordsPositions[i].bottom;
       let currentLeft = gameApp.currentWordsPositions[i].left;
       let currentRight = gameApp.currentWordsPositions[i].right;
 
-      // collision condition
-      if (
-        ((top > currentTop && top < currentBot) ||
-          (bottom < currentBot && bottom > currentTop)) &&
-        ((left > currentLeft && left < currentRight) ||
-          (right < currentRight && right > currentLeft))
-      ) {
-        // assign new position to word if collusion is detected
-        // and call the collision function again to check if new position is valid
-        let newXPosition = `${gameApp.random(90)}%`;
-        let newYPosition = `${gameApp.random(73) + 12}%`;
-        word.css({
-          bottom: newYPosition,
-          left: newXPosition,
-          visibility: "hidden"
-        });
-        // check if newly reassigned word collides with any words
-        gameApp.detectCollision(word);
+      // if the new word's width is smaller or equal than the width of the current word to be compared to
+      if (width <= currentRight - currentLeft) {
+        // collision condition for smaller word
+        if (
+          ((top >= currentTop && top <= currentBot) || (bottom <= currentBot && bottom >= currentTop)) &&
+          ((left >= currentLeft && left <= currentRight) || (right <= currentRight && right >= currentLeft))
+        ) {
+          // assign new position to word if collusion is detected
+          // and call the collision function again to check if new position is valid
+          let newXPosition = `${gameApp.random(90)}%`;
+          let newYPosition = `${gameApp.random(73) + 12}%`;
+          word.css({
+            bottom: newYPosition,
+            left: newXPosition,
+            visibility: "hidden"
+          });
+          // check if newly reassigned word collides with any words
+          collision = true;
+          gameApp.detectCollision(word);
+        }
+      }
+      // if the new word's width is larger than the width of the current word to be compared to
+      else if (width > currentRight - currentLeft) {
+        // collision condition for larger words
+        if (
+          ((top >= currentTop && top <= currentBot) || (bottom <= currentBot && bottom >= currentTop)) &&
+          ((left >= currentLeft && left <= currentRight) ||
+            (right <= currentRight && right >= currentLeft) ||
+            (left <= currentLeft && right >= currentRight))
+        ) {
+          let newXPosition = `${gameApp.random(90)}%`;
+          let newYPosition = `${gameApp.random(73) + 12}%`;
+          word.css({
+            bottom: newYPosition,
+            left: newXPosition,
+            visibility: "hidden"
+          });
+          // check if newly reassigned word collides with any words
+          collision = true;
+          gameApp.detectCollision(word);
+        }
       }
     }
     // if no collision, add newly generated word into array of all words on screen and show the word on screen
-    gameApp.currentWordsPositions.push(positions);
-    word
-      .css({ visibility: "visible" })
-      .hide()
-      .fadeIn();
+    if (collision === false) {
+      gameApp.currentWordsPositions.push(positions);
+      word
+        .css({ visibility: "visible" })
+        .hide()
+        .fadeIn();
+    }
   }
 };
 
@@ -718,11 +730,8 @@ gameApp.countDown = function(startTime) {
 
 /* C1. PLAY AGAIN EVENT LISTENER */
 gameApp.playAgain = function() {
-  $(document).on("keypress click", function(event) {
-    if (
-      event.which === 13 ||
-      ($(".reset").data("clicked", true) && $(".reset").is(":visible"))
-    ) {
+  $(document).on("keypress", function(event) {
+    if (event.which === 13 && $(".reset").is(":visible")) {
       window.location.reload();
     }
   });
