@@ -222,9 +222,16 @@ button {
 
 a {
   color: #42f448;
-  text-decoration: none; }
-  a:hover {
+  text-decoration: none;
+  outline: none;
+  display: inline-block; }
+  a:hover,
+  a h4:hover {
     text-decoration: underline; }
+
+a:visited,
+a:focus {
+  outline: none; }
 
 /* ======================
 OVERALL BACKGROUND
@@ -417,8 +424,15 @@ INTRODUCTION PART OF GAME
   text-align: left;
   width: 70%; }
 
+.intro-title h4 {
+  display: inline-block; }
+
 .intro-title .author {
-  font-size: 2.2rem; }
+  font-size: 2.2rem;
+  display: inline-block; }
+
+.read-rules {
+  display: block; }
 
 /* ======================
 STYLING FOR THE MAIN GAME PAGE
