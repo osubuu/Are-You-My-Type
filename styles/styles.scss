@@ -199,7 +199,6 @@ li {
 
 .welcome,
 .author,
-.author-heading,
 .read-rules,
 .ending-number-of-words,
 .ending-average-typing-second,
@@ -231,10 +230,18 @@ button {
 a {
   color: #42f448;
   text-decoration: none;
+  outline: none;
+  display: inline-block;
 
-  &:hover {
+  &:hover,
+  h4:hover {
     text-decoration: underline;
   }
+}
+
+a:visited,
+a:focus {
+  outline: none;
 }
 /* ======================
 OVERALL BACKGROUND
@@ -427,10 +434,18 @@ INTRODUCTION PART OF GAME
 }
 
 .intro-title {
-  .author,
-  .author-heading {
-    font-size: 2.2rem;
+  h4 {
+    display: inline-block;
   }
+
+  .author {
+    font-size: 2.2rem;
+    display: inline-block;
+  }
+}
+
+.read-rules {
+  display: block;
 }
 
 /* ======================
