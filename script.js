@@ -432,6 +432,9 @@ gameApp.showRules = function() {
     gameApp.typeWriter(".author", 40);
   }, 3000);
   setTimeout(function() {
+    gameApp.typeWriter(".author-heading", 40);
+  }, 3000);
+  setTimeout(function() {
     gameApp.typeWriter(".read-rules", 40);
   }, 3000);
 

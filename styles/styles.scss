@@ -199,6 +199,7 @@ li {
 
 .welcome,
 .author,
+.author-heading,
 .read-rules,
 .ending-number-of-words,
 .ending-average-typing-second,
@@ -426,7 +427,8 @@ INTRODUCTION PART OF GAME
 }
 
 .intro-title {
-  .author {
+  .author,
+  .author-heading {
     font-size: 2.2rem;
   }
 }
