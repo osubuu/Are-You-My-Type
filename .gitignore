@@ -1,3 +1,5 @@
 *.txt
 *.config
 *.psd
+prepros-6.config
+.DS_Store
