@@ -6,7 +6,7 @@ Difficult words randomly appear on the screen and users must type them out as fa
 Notable features include word collision detection, word death animations and overall theme design.
 
 ## Live Link
-[Link to game](http://khoipham.net/are-you-my-type/)
+[Link to game](https://are-you-my-type.netlify.app/)
 
 
 ## Screenshots
